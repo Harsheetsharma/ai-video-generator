@@ -1,5 +1,7 @@
+import { Prompt } from "@/types/prompt";
+
 export class OllamaClient {
-    async generate(prompt: string): Promise<string> {
+    async generate(prompt: Prompt): Promise<string> {
         const response = await fetch(
             `${process.env.OLLAMA_URL}/api/chat`,
             {
@@ -13,8 +15,12 @@ export class OllamaClient {
                     think: false,
                     messages: [
                         {
+                            role: "system",
+                            content: prompt.systemPrompt
+                        },
+                        {
                             role: "user",
-                            content: prompt,
+                            content: prompt.userPrompt,
                         },
                     ],
                 })

@@ -12,11 +12,17 @@ export async function generateBlueprint({ script }: generateBlueprintInput): Pro
 
     const prompt = promptBuilder.buildScenePlanningPrompt(script);
 
-    console.log(prompt);
-
     const rawResponse = await ollama.generate(prompt);
 
+    console.log("========== SYSTEM ==========");
+    console.log(prompt.systemPrompt);
+
+    console.log("========== USER ==========");
+    console.log(prompt.userPrompt);
+
+    console.log("========== RESPONSE ==========");
     console.log(rawResponse);
+
     console.log("Generating blueprint for:", script);
 
     return {

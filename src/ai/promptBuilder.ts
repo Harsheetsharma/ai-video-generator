@@ -1,14 +1,23 @@
+import { Prompt } from "@/types/prompt";
+
 export class PromptBuilder {
-    buildScenePlanningPrompt(script: string): string {
-        return `
+    buildScenePlanningPrompt(script: string): Prompt {
+        return {
+            systemPrompt: `
 You are a helpful AI assistant.
 
-The user will provide a script.
+Your job is to help the user.
 
-Your job is to read the script and respond with a short summary.
+Always answer clearly.
+`.trim(),
 
-User Script:
+            userPrompt: `
+Summarize the following script in one paragraph.
+
+Script:
+
 ${script}
-`;
+`.trim(),
+        };
     }
 }
