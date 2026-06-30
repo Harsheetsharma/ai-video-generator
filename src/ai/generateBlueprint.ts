@@ -2,21 +2,23 @@ import { VideoBlueprint } from "@/types/blueprint";
 import { OllamaClient } from './ollamaClient';
 import { PromptBuilder } from "./promptBuilder";
 import { BlueprintParser } from "@/parser/blueprintParser";
+import { ResponseSanitizer } from "@/parser/responseSanitizer";
+import { VideoPlan } from "@/types/videoPlan";
+import { GenerateVideoRequest } from "@/types/generateVideoRequest";
 
+
+const sanitizer = new ResponseSanitizer();
 const parser = new BlueprintParser();
 const promptBuilder = new PromptBuilder()
 const ollama = new OllamaClient();
-export interface generateBlueprintInput {
-    script: string;
-}
 
-export async function generateBlueprint({ script }: generateBlueprintInput): Promise<VideoBlueprint> {
+export async function generateBlueprint({ script, targetType }: GenerateVideoRequest): Promise<VideoBlueprint> {
 
-    const prompt = promptBuilder.buildScenePlanningPrompt(script);
+    const prompt = promptBuilder.buildScenePlanningPrompt(script, targetType);
 
     const rawResponse = await ollama.generate(prompt);
-
-    const parsed = parser.parse(rawResponse);
+    const sanitizedResponse = sanitizer.sanitize(rawResponse);
+    const videoPlan = parser.parse<VideoPlan>(sanitizedResponse);
 
     console.log("========== SYSTEM ==========");
     console.log(prompt.systemPrompt);
@@ -27,7 +29,17 @@ export async function generateBlueprint({ script }: generateBlueprintInput): Pro
     console.log("========== RESPONSE ==========");
     console.log(rawResponse);
 
-    console.log(parsed);
+    console.log("========== RAW RESPONSE ==========");
+    console.log(rawResponse);
+
+    console.log("========== SANITIZED ==========");
+    console.log(sanitizedResponse);
+
+    console.log(videoPlan);
+
+    console.log("========== VIDEO PLAN ==========");
+    console.log(videoPlan);
+
 
     console.log("Generating blueprint for:", script);
 
