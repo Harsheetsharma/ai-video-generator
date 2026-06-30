@@ -1,8 +1,10 @@
 import { VideoBlueprint } from "@/types/blueprint";
 import { OllamaClient } from './ollamaClient';
 import { PromptBuilder } from "./promptBuilder";
+import { BlueprintParser } from "@/parser/blueprintParser";
 
-const promptBuilder = new PromptBuilder
+const parser = new BlueprintParser();
+const promptBuilder = new PromptBuilder()
 const ollama = new OllamaClient();
 export interface generateBlueprintInput {
     script: string;
@@ -14,6 +16,8 @@ export async function generateBlueprint({ script }: generateBlueprintInput): Pro
 
     const rawResponse = await ollama.generate(prompt);
 
+    const parsed = parser.parse(rawResponse);
+
     console.log("========== SYSTEM ==========");
     console.log(prompt.systemPrompt);
 
@@ -22,6 +26,8 @@ export async function generateBlueprint({ script }: generateBlueprintInput): Pro
 
     console.log("========== RESPONSE ==========");
     console.log(rawResponse);
+
+    console.log(parsed);
 
     console.log("Generating blueprint for:", script);
 
