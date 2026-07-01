@@ -33,6 +33,13 @@ const SceneSchema = z.object({
         "news",
         "abstract",
     ]),
+
+    layout: z.enum([
+        "hero",
+        "split",
+        "news",
+        "quote",
+    ]),
 });
 
 export class BlueprintValidator {

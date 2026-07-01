@@ -1,19 +1,19 @@
 import { Prompt } from "@/types/prompt";
 import { TargetType } from "@/types/generateVideoRequest";
 export class PromptBuilder {
-    buildScenePlanningPrompt(script: string, targetType: TargetType): Prompt {
+  buildScenePlanningPrompt(script: string, targetType: TargetType): Prompt {
 
-        const duration =
-            targetType === "short"
-                ? "15-60 seconds"
-                : "5-10 minutes";
+    const duration =
+      targetType === "short"
+        ? "15-60 seconds"
+        : "5-10 minutes";
 
-        const scenes =
-            targetType === "short"
-                ? "5-10 scenes"
-                : "40-80 scenes";
-        return {
-            systemPrompt: `
+    const scenes =
+      targetType === "short"
+        ? "5-10 scenes"
+        : "40-80 scenes";
+    return {
+      systemPrompt: `
 You are a backend API.
 
 Your job is to return ONLY valid JSON.
@@ -27,7 +27,7 @@ Rules:
 - The JSON must be valid.
 `.trim(),
 
-            userPrompt: `
+      userPrompt: `
 Create a complete video blueprint.
 
 Target Video Type:
@@ -56,6 +56,7 @@ JSON Schema:
       "visualType": "stock_market | tech | ai | warning | news | abstract",
       "animation": "zoom_in | fade | slide_up | glitch",
       "background": "stock_market | tech | ai | warning | news | abstract"
+      "layout": "hero | split | news | quote"
     }
   ]
 }
@@ -83,6 +84,12 @@ Rules:
   slide_up
   glitch
 
+- layout MUST be one of:
+  hero
+  split
+  news
+  quote
+  
 - Do NOT use colors for background.
 - background represents an asset key, not a color.
 - captions must NOT contain quotation marks.
@@ -98,6 +105,6 @@ Rules:
 Script:
 ${script}
 `.trim(),
-        };
-    }
+    };
+  }
 }

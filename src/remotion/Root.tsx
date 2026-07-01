@@ -15,6 +15,7 @@ const mockBlueprint: VideoBlueprint = {
       visualType: "tech",
       animation: "zoom_in",
       background: "tech",
+      layout: "hero",
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ const mockBlueprint: VideoBlueprint = {
       visualType: "ai",
       animation: "fade",
       background: "ai",
+      layout: "news",
     },
     {
       id: 3,
@@ -35,6 +37,7 @@ const mockBlueprint: VideoBlueprint = {
       visualType: "ai",
       animation: "fade",
       background: "ai",
+      layout: "quote",
     },
   ],
 };

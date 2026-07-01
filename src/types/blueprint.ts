@@ -1,3 +1,9 @@
+export type LayoutType =
+    | "hero"
+    | "split"
+    | "news"
+    | "quote";
+
 export type VisualType =
     | "stock_market"
     | "tech"
@@ -21,6 +27,7 @@ export interface Scene {
     visualType: VisualType;
     animation: AnimationType;
     background: VisualType;
+    layout: LayoutType;
 }
 
 export interface VideoBlueprint {
