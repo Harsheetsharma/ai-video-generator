@@ -14,7 +14,7 @@
 /coverage
 
 /videos
-
+/public/videos
 # next.js
 /.next/
 /out/
