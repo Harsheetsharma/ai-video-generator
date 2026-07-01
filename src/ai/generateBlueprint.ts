@@ -5,8 +5,9 @@ import { BlueprintParser } from "@/parser/blueprintParser";
 import { ResponseSanitizer } from "@/parser/responseSanitizer";
 import { VideoPlan } from "@/types/videoPlan";
 import { GenerateVideoRequest } from "@/types/generateVideoRequest";
+import { BlueprintValidator } from "@/parser/blueprintValidator";
 
-
+const validator = new BlueprintValidator();
 const sanitizer = new ResponseSanitizer();
 const parser = new BlueprintParser();
 const promptBuilder = new PromptBuilder()
@@ -18,7 +19,11 @@ export async function generateBlueprint({ script, targetType }: GenerateVideoReq
 
     const rawResponse = await ollama.generate(prompt);
     const sanitizedResponse = sanitizer.sanitize(rawResponse);
-    const videoPlan = parser.parse<VideoPlan>(sanitizedResponse);
+
+    const parsed = parser.parse(sanitizedResponse);
+
+    const videoPlan = validator.validate(parsed);
+
 
     console.log("========== SYSTEM ==========");
     console.log(prompt.systemPrompt);
@@ -35,10 +40,11 @@ export async function generateBlueprint({ script, targetType }: GenerateVideoReq
     console.log("========== SANITIZED ==========");
     console.log(sanitizedResponse);
 
-    console.log(videoPlan);
-
     console.log("========== VIDEO PLAN ==========");
     console.log(videoPlan);
+    console.log(parsed);
+
+
 
 
     console.log("Generating blueprint for:", script);

@@ -28,9 +28,7 @@ Rules:
 `.trim(),
 
             userPrompt: `
-Read the following script.
-
-Create a video plan.
+Create a complete video blueprint.
 
 Target Video Type:
 ${targetType}
@@ -47,22 +45,57 @@ JSON Schema:
 
 {
   "title": "string",
-  "summary": "string",
-  "estimatedDuration": number,
-  "sceneCount": number
+  "totalDuration": number,
+  "scenes": [
+    {
+      "id": number,
+      "start": number,
+      "end": number,
+      "text": "string",
+      "caption": "string",
+      "visualType": "stock_market | tech | ai | warning | news | abstract",
+      "animation": "zoom_in | fade | slide_up | glitch",
+      "background": "stock_market | tech | ai | warning | news | abstract"
+    }
+  ]
 }
 
 Rules:
+- background MUST be one of:
+  stock_market
+  tech
+  ai
+  warning
+  news
+  abstract
 
-- title should be short and engaging.
-- summary should be 1-2 sentences.
-- estimatedDuration MUST match the target duration.
-- sceneCount MUST match the expected scene count.
+- visualType MUST be one of:
+  stock_market
+  tech
+  ai
+  warning
+  news
+  abstract
+
+- animation MUST be one of:
+  zoom_in
+  fade
+  slide_up
+  glitch
+
+- Do NOT use colors for background.
+- background represents an asset key, not a color.
+- captions must NOT contain quotation marks.
+- Generate exactly the number of scenes needed for the requested video type.
+- totalDuration MUST equal the end value of the last scene.
+- Every scene must start where the previous scene ended.
+- Every scene must continue naturally from the previous one.
+- Scene IDs must start from 1.
+- start/end must be sequential.
+- Every caption should be short.
 - Return ONLY JSON.
-- Do NOT add extra fields.
 
 Script:
-
 ${script}
 `.trim(),
         };

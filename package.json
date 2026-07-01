@@ -6,17 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "remotion:studio": "remotion studio remotion.root.ts",
+    "remotion:render": "remotion render remotion.root.ts AI-Video out/video.mp4"
   },
   "dependencies": {
+    "@remotion/player": "^4.0.484",
+    "@remotion/renderer": "^4.0.484",
     "axios": "^1.18.1",
     "clsx": "^2.1.1",
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "remotion": "^4.0.484",
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@remotion/cli": "^4.0.484",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
