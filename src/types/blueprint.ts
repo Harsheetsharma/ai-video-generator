@@ -20,7 +20,7 @@ export interface Scene {
     caption: string;
     visualType: VisualType;
     animation: AnimationType;
-    background: string;
+    background: VisualType;
 }
 
 export interface VideoBlueprint {

@@ -4,11 +4,16 @@ import { AnimationType } from "@/types/blueprint";
 
 interface AnimatedTextProps {
   animation: AnimationType;
+  localFrame: number;
   children: React.ReactNode;
 }
 
-export const AnimatedText = ({ animation, children }: AnimatedTextProps) => {
-  const frame = useCurrentFrame();
+export const AnimatedText = ({
+  animation,
+  children,
+  localFrame,
+}: AnimatedTextProps) => {
+  const frame = localFrame;
   const { fps } = useVideoConfig();
 
   let opacity = 1;
