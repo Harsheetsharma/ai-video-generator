@@ -3,10 +3,11 @@ import { OllamaClient } from './ollamaClient';
 import { PromptBuilder } from "./promptBuilder";
 import { BlueprintParser } from "@/parser/blueprintParser";
 import { ResponseSanitizer } from "@/parser/responseSanitizer";
-import { VideoPlan } from "@/types/videoPlan";
 import { GenerateVideoRequest } from "@/types/generateVideoRequest";
 import { BlueprintValidator } from "@/parser/blueprintValidator";
+import { BlueprintRepairer } from "@/parser/blueprintRepairer";
 
+const repairer = new BlueprintRepairer();
 const validator = new BlueprintValidator();
 const sanitizer = new ResponseSanitizer();
 const parser = new BlueprintParser();
@@ -34,19 +35,29 @@ export async function generateBlueprint({
             console.log("========== USER ==========");
             console.log(prompt.userPrompt);
 
+            const start = performance.now();
             const rawResponse = await ollama.generate(prompt);
+            console.log("Ollama:", performance.now() - start);
 
             console.log("========== RAW RESPONSE ==========");
             console.log(rawResponse);
 
+            const t1 = performance.now();
             const sanitizedResponse = sanitizer.sanitize(rawResponse);
+            console.log("Sanitize:", performance.now() - t1);
 
             console.log("========== SANITIZED ==========");
             console.log(sanitizedResponse);
 
+            const t2 = performance.now()
             const parsed = parser.parse(sanitizedResponse);
+            console.log("parsed", performance.now() - t2);
 
-            const blueprint = validator.validate(parsed);
+            const repaired = repairer.repair(parsed);
+
+            const t3 = performance.now()
+            const blueprint = validator.validate(repaired);
+            console.log("validate", performance.now() - t3);
 
             console.log("========== BLUEPRINT ==========");
             console.log(blueprint);
