@@ -40,6 +40,19 @@ const SceneSchema = z.object({
         "news",
         "quote",
     ]),
+
+    transition: z.enum([
+        "cut",
+        "fade",
+        "zoom",
+        "slide",
+    ]),
+
+    visualSearch: z.string().min(1),
+
+    musicMood: z.string().min(1),
+
+    voiceEmotion: z.string().min(1),
 });
 
 export class BlueprintValidator {

@@ -1,16 +1,10 @@
-export type LayoutType =
-    | "hero"
-    | "split"
-    | "news"
-    | "quote";
-
 export type VisualType =
-    | "stock_market"
     | "tech"
     | "ai"
-    | "warning"
     | "news"
-    | "abstract";
+    | "warning"
+    | "abstract"
+    | "stock_market";
 
 export type AnimationType =
     | "zoom_in"
@@ -18,16 +12,42 @@ export type AnimationType =
     | "slide_up"
     | "glitch";
 
+export type LayoutType =
+    | "hero"
+    | "split"
+    | "news"
+    | "quote";
+
+export type TransitionType =
+    | "cut"
+    | "fade"
+    | "zoom"
+    | "slide";
+
 export interface Scene {
     id: number;
+
     start: number;
     end: number;
+
     text: string;
     caption: string;
+
     visualType: VisualType;
-    animation: AnimationType;
+
     background: VisualType;
+
+    animation: AnimationType;
+
     layout: LayoutType;
+
+    transition: TransitionType;
+
+    visualSearch: string;
+
+    musicMood: string;
+
+    voiceEmotion: string;
 }
 
 export interface VideoBlueprint {

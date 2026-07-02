@@ -6,7 +6,7 @@ interface BackgroundProps {
 }
 
 export const Background = ({ type }: BackgroundProps) => {
-  const src = staticFile(AssetResolver.getBackground(type));
+  const src = AssetResolver.getBackground(type);
 
   return (
     <AbsoluteFill>

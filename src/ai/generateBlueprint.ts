@@ -13,45 +13,55 @@ const parser = new BlueprintParser();
 const promptBuilder = new PromptBuilder()
 const ollama = new OllamaClient();
 
-export async function generateBlueprint({ script, targetType }: GenerateVideoRequest): Promise<VideoBlueprint> {
+export async function generateBlueprint({
+    script,
+    targetType,
+}: GenerateVideoRequest): Promise<VideoBlueprint> {
 
     const prompt = promptBuilder.buildScenePlanningPrompt(script, targetType);
 
-    const rawResponse = await ollama.generate(prompt);
-    const sanitizedResponse = sanitizer.sanitize(rawResponse);
+    const MAX_RETRIES = 3;
 
-    const parsed = parser.parse(sanitizedResponse);
+    let lastError: unknown;
 
-    const videoPlan = validator.validate(parsed);
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        try {
+            console.log(`\n========== ATTEMPT ${attempt} ==========`);
 
+            console.log("========== SYSTEM ==========");
+            console.log(prompt.systemPrompt);
 
-    console.log("========== SYSTEM ==========");
-    console.log(prompt.systemPrompt);
+            console.log("========== USER ==========");
+            console.log(prompt.userPrompt);
 
-    console.log("========== USER ==========");
-    console.log(prompt.userPrompt);
+            const rawResponse = await ollama.generate(prompt);
 
-    console.log("========== RESPONSE ==========");
-    console.log(rawResponse);
+            console.log("========== RAW RESPONSE ==========");
+            console.log(rawResponse);
 
-    console.log("========== RAW RESPONSE ==========");
-    console.log(rawResponse);
+            const sanitizedResponse = sanitizer.sanitize(rawResponse);
 
-    console.log("========== SANITIZED ==========");
-    console.log(sanitizedResponse);
+            console.log("========== SANITIZED ==========");
+            console.log(sanitizedResponse);
 
-    console.log("========== VIDEO PLAN ==========");
-    console.log(videoPlan);
-    console.log(parsed);
+            const parsed = parser.parse(sanitizedResponse);
 
+            const blueprint = validator.validate(parsed);
 
+            console.log("========== BLUEPRINT ==========");
+            console.log(blueprint);
 
+            console.log("Blueprint generated successfully.");
 
-    console.log("Generating blueprint for:", script);
+            return blueprint;
 
-    return {
-        title: "Mock Video",
-        totalDuration: 15,
-        scenes: [],
-    };
+        } catch (error) {
+            lastError = error;
+
+            console.log(`❌ Attempt ${attempt} failed.`);
+            console.error(error);
+        }
+    }
+
+    throw lastError;
 }
