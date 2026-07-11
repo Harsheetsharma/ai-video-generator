@@ -11,7 +11,7 @@ interface NewsLayoutProps {
 export const NewsLayout = ({ scene, localFrame }: NewsLayoutProps) => {
   return (
     <AbsoluteFill>
-      <Background type={scene.background} />
+      <Background scene={scene} />
 
       <AbsoluteFill
         style={{

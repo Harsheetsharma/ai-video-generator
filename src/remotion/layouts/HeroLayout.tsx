@@ -17,7 +17,7 @@ export const HeroLayout = ({ scene, localFrame }: HeroLayoutProps) => {
         textAlign: "center",
       }}
     >
-      <Background type={scene.background} />
+      <Background scene={scene} />
       <AbsoluteFill
         style={{
           justifyContent: "center",

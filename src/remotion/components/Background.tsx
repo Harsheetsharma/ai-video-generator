@@ -1,17 +1,22 @@
-import { AbsoluteFill, OffthreadVideo, staticFile } from "remotion";
-import { VisualType } from "@/types/blueprint";
-import { AssetResolver } from "../../renderer/AssetResolver";
+import { AbsoluteFill, OffthreadVideo } from "remotion";
+// import { AssetProvider } from "@/assets/AssetProvider";
+import { AssetProvider } from "../../assets/AssetProvider";
+import { Scene } from "@/types/blueprint";
 interface BackgroundProps {
-  type: VisualType;
+  scene: Scene;
 }
 
-export const Background = ({ type }: BackgroundProps) => {
-  const src = AssetResolver.getBackground(type);
+export const Background = ({ scene }: BackgroundProps) => {
+  console.log("Scene:", scene);
 
+  if (!scene) {
+    throw new Error("Scene is undefined in Background");
+  }
+  const video = AssetProvider.getVideo(scene);
   return (
     <AbsoluteFill>
       <OffthreadVideo
-        src={src}
+        src={video.src}
         muted
         style={{
           width: "100%",
