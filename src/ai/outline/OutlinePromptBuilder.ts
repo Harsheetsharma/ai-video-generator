@@ -2,12 +2,12 @@ import { Prompt } from "@/types/prompt";
 import { TargetType } from "@/types/generateVideoRequest";
 
 export class OutlinePromptBuilder {
-    build(script: string, targetType: TargetType): Prompt {
-        const sectionCount =
-            targetType === "short" ? "3-5" : "8-12";
+  build(script: string, targetType: TargetType): Prompt {
+    const sectionCount =
+      targetType === "short" ? "3-5" : "8-12";
 
-        return {
-            systemPrompt: `
+    return {
+      systemPrompt: `
 You are an expert video planner.
 
 Return ONLY valid JSON.
@@ -21,7 +21,7 @@ Do not generate visual details.
 Return ONLY an outline.
 `.trim(),
 
-            userPrompt: `
+      userPrompt: `
 Script:
 ${script}
 
@@ -50,7 +50,17 @@ Rules:
 - Do not generate scenes.
 - Do not generate timings.
 - Do not generate animations.
+
+- Do not invent facts.
+- If the topic is educational or factual,
+  only include information that is likely to be correct.
+- Avoid making up cultural rules,
+- statistics,
+- historical events,
+  or technical claims.
+- Base the outline on the user's script.
+- Expand the script logically, but do not introduce unsupported claims.
 `.trim(),
-        };
-    }
+    };
+  }
 }
