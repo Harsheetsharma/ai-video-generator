@@ -1,5 +1,5 @@
 import { Scene } from "@/types/blueprint";
-
+import { StatisticsLayout } from "./StatisticsLayout";
 import { HeroLayout } from "./HeroLayout";
 import { SplitLayout } from "./SplitLayout";
 import { NewsLayout } from "./NewsLayout";
@@ -18,6 +18,8 @@ export const LayoutResolver = ({ scene, localFrame }: LayoutResolverProps) => {
     case "split":
       return <SplitLayout scene={scene} />;
 
+    case "statistics":
+      return <StatisticsLayout scene={scene} />;
     case "news":
       return <NewsLayout scene={scene} localFrame={localFrame} />;
 

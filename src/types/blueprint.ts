@@ -16,13 +16,24 @@ export type LayoutType =
     | "hero"
     | "split"
     | "news"
-    | "quote";
+    | "quote"
+    | "statistics";
 
 export type TransitionType =
     | "cut"
     | "fade"
     | "zoom"
     | "slide";
+
+export type ScenePurpose =
+    | "hook"
+    | "explanation"
+    | "statistic"
+    | "quote"
+    | "comparison"
+    | "timeline"
+    | "steps"
+    | "cta";
 
 export interface Scene {
     id: number;
@@ -48,6 +59,8 @@ export interface Scene {
     musicMood: string;
 
     voiceEmotion: string;
+
+    scenePurpose: ScenePurpose;
 }
 
 export interface VideoBlueprint {
