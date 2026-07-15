@@ -1,70 +1,48 @@
 import { VideoBlueprint } from "@/types/blueprint";
-import { OllamaClient } from './ollamaClient';
-import { PromptBuilder } from "./promptBuilder";
-import { BlueprintParser } from "@/parser/blueprintParser";
-import { ResponseSanitizer } from "@/parser/responseSanitizer";
 import { GenerateVideoRequest } from "@/types/generateVideoRequest";
 import { BlueprintValidator } from "@/parser/blueprintValidator";
-import { BlueprintRepairer } from "@/parser/blueprintRepairer";
+import { OutlineGenerator } from "./outline/OutlineGenerator";
+import { SectionPlanner } from "./planner/SectionPlanner";
+import { BlueprintMerger } from "./merger/BlueprintMerger";
 
-const repairer = new BlueprintRepairer();
+const merger = new BlueprintMerger();
+const sectionPlanner = new SectionPlanner();
+const outlineGenerator = new OutlineGenerator();
 const validator = new BlueprintValidator();
-const sanitizer = new ResponseSanitizer();
-const parser = new BlueprintParser();
-const promptBuilder = new PromptBuilder()
-const ollama = new OllamaClient();
+
 
 export async function generateBlueprint({
     script,
     targetType,
 }: GenerateVideoRequest): Promise<VideoBlueprint> {
 
-    const prompt = promptBuilder.buildScenePlanningPrompt(script, targetType);
-
     const MAX_RETRIES = 3;
-
     let lastError: unknown;
 
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+
         try {
+            const outline = await outlineGenerator.generate(script, targetType);
+            const sectionPlans = [];
             console.log(`\n========== ATTEMPT ${attempt} ==========`);
-
-            console.log("========== SYSTEM ==========");
-            console.log(prompt.systemPrompt);
-
-            console.log("========== USER ==========");
-            console.log(prompt.userPrompt);
-
             const start = performance.now();
-            const rawResponse = await ollama.generate(prompt);
-            console.log("Ollama:", performance.now() - start);
 
-            console.log("========== RAW RESPONSE ==========");
-            console.log(rawResponse);
+            for (const section of outline.sections) {
+                console.log(`Generating section ${section.id}: ${section.title}`);
+                const plan = await sectionPlanner.generate(section);
 
-            const t1 = performance.now();
-            const sanitizedResponse = sanitizer.sanitize(rawResponse);
-            console.log("Sanitize:", performance.now() - t1);
-
-            console.log("========== SANITIZED ==========");
-            console.log(sanitizedResponse);
-
-            const t2 = performance.now()
-            const parsed = parser.parse(sanitizedResponse);
-            console.log("parsed", performance.now() - t2);
-
-            const repaired = repairer.repair(parsed);
-
-            const t3 = performance.now()
-            const blueprint = validator.validate(repaired);
-            console.log("validate", performance.now() - t3);
+                sectionPlans.push(plan);
+            }
+            console.log("outline", outline);
+            console.log("Pipeline:", performance.now() - start);
+            const blueprint = merger.merge(outline, sectionPlans);
 
             console.log("========== BLUEPRINT ==========");
             console.log(blueprint);
 
             console.log("Blueprint generated successfully.");
 
-            return blueprint;
+            return validator.validate(blueprint);
 
         } catch (error) {
             lastError = error;
