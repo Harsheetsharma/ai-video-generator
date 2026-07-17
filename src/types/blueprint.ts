@@ -61,6 +61,7 @@ export interface Scene {
 
     voiceEmotion: string;
 
+    timelineLabel?: string;
     // scenePurpose: ScenePurpose;
 }
 

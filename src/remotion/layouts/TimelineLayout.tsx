@@ -18,6 +18,17 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
       <AnimatedCard>
         <div
           style={{
+            color: "white",
+            fontSize: 42,
+            fontWeight: 700,
+            marginBottom: 20,
+          }}
+        >
+          {scene.timelineLabel}
+        </div>
+
+        <div
+          style={{
             width: 6,
             height: 220,
             background: "#5B8CFF",
