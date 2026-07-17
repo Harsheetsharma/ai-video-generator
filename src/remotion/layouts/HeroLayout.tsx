@@ -3,6 +3,7 @@ import { Scene } from "@/types/blueprint";
 import { AnimatedText } from "../components/AnimatedText";
 import { Background } from "../components/Background";
 import { AnimatedCard } from "../components/cards/AnimatedCard";
+import { HeroTitle, Subtitle } from "../theme/Typography";
 
 interface HeroLayoutProps {
   scene: Scene;
@@ -15,29 +16,11 @@ export const HeroLayout = ({ scene, localFrame }: HeroLayoutProps) => {
       <Background scene={scene} />
       <AnimatedCard>
         <AnimatedText animation={scene.animation} localFrame={localFrame}>
-          <h1
-            style={{
-              fontSize: 90,
-              color: "white",
-              fontWeight: "bold",
-              marginBottom: 30,
-              lineHeight: 1.1,
-            }}
-          >
-            {scene.text}
-          </h1>
+          <HeroTitle>{scene.text}</HeroTitle>
         </AnimatedText>
 
         <AnimatedText animation="fade" localFrame={localFrame}>
-          <p
-            style={{
-              fontSize: 42,
-              color: "#dddddd",
-              maxWidth: 800,
-            }}
-          >
-            {scene.caption}
-          </p>
+          <Subtitle>{scene.caption}</Subtitle>
         </AnimatedText>
       </AnimatedCard>
     </AbsoluteFill>

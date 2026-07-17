@@ -25,15 +25,15 @@ export type TransitionType =
     | "zoom"
     | "slide";
 
-export type ScenePurpose =
-    | "hook"
-    | "explanation"
-    | "statistic"
-    | "quote"
-    | "comparison"
-    | "timeline"
-    | "steps"
-    | "cta";
+// export type ScenePurpose =
+//     | "hook"
+//     | "explanation"
+//     | "statistic"
+//     | "quote"
+//     | "comparison"
+//     | "timeline"
+//     | "steps"
+//     | "cta";
 
 export interface Scene {
     id: number;
@@ -60,7 +60,7 @@ export interface Scene {
 
     voiceEmotion: string;
 
-    scenePurpose: ScenePurpose;
+    // scenePurpose: ScenePurpose;
 }
 
 export interface VideoBlueprint {

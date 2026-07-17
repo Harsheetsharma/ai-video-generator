@@ -6,7 +6,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import React from "react";
-
+import { Theme } from "../../theme/Theme";
 interface AnimatedCardProps {
   children: React.ReactNode;
 }
@@ -47,17 +47,17 @@ export const AnimatedCard = ({ children }: AnimatedCardProps) => {
 
           width: 820,
 
-          padding: 50,
+          padding: Theme.spacing.xl,
 
-          borderRadius: 40,
+          borderRadius: Theme.radius.xl,
 
-          background: "rgba(15,15,20,.55)",
+          background: Theme.colors.glass,
 
           backdropFilter: "blur(25px)",
 
-          border: "1px solid rgba(255,255,255,.15)",
+          border: `1px solid ${Theme.colors.glassBorder}`,
 
-          boxShadow: "0 25px 60px rgba(0,0,0,.35)",
+          boxShadow: Theme.shadow.glass,
 
           display: "flex",
 
