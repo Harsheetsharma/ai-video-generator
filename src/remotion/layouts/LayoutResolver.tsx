@@ -4,7 +4,7 @@ import { HeroLayout } from "./HeroLayout";
 import { SplitLayout } from "./SplitLayout";
 import { NewsLayout } from "./NewsLayout";
 import { QuoteLayout } from "./QuoteLayout";
-
+import { TimelineLayout } from "./TimelineLayout";
 interface LayoutResolverProps {
   scene: Scene;
   localFrame: number;
@@ -20,6 +20,9 @@ export const LayoutResolver = ({ scene, localFrame }: LayoutResolverProps) => {
 
     case "statistics":
       return <StatisticsLayout scene={scene} />;
+
+    case "timeline":
+      return <TimelineLayout scene={scene} localFrame={localFrame} />;
     case "news":
       return <NewsLayout scene={scene} localFrame={localFrame} />;
 

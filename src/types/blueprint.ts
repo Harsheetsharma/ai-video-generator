@@ -17,7 +17,8 @@ export type LayoutType =
     | "split"
     | "news"
     | "quote"
-    | "statistics";
+    | "statistics"
+    | "timeline";
 
 export type TransitionType =
     | "cut"

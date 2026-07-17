@@ -30,7 +30,7 @@ const mockBlueprint: VideoBlueprint = {
       visualType: "ai",
       animation: "fade",
       background: "tech",
-      layout: "hero",
+      layout: "timeline",
       transition: "cut",
       visualSearch: "Apple keynote stage",
       musicMood: "epic",
