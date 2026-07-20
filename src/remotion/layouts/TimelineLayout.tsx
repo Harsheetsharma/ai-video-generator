@@ -24,18 +24,36 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
             marginBottom: 20,
           }}
         >
-          {scene.timelineLabel}
+          {JSON.stringify(scene.timelineLabel, null, 2)}
         </div>
 
         <div
           style={{
-            width: 6,
-            height: 220,
-            background: "#5B8CFF",
-            borderRadius: 999,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             marginBottom: 30,
           }}
-        />
+        >
+          <div
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: "50%",
+              background: "#5B8CFF",
+              marginBottom: 8,
+            }}
+          />
+
+          <div
+            style={{
+              width: 6,
+              height: 180,
+              borderRadius: 999,
+              background: "#5B8CFF",
+            }}
+          />
+        </div>
 
         <Title>{scene.text}</Title>
 

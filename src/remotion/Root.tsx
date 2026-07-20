@@ -20,7 +20,6 @@ const mockBlueprint: VideoBlueprint = {
       visualSearch: "Apple keynote stage",
       musicMood: "epic",
       voiceEmotion: "excited",
-      timelineLabel: "2023",
     },
     {
       id: 2,
@@ -36,6 +35,7 @@ const mockBlueprint: VideoBlueprint = {
       visualSearch: "Apple keynote stage",
       musicMood: "epic",
       voiceEmotion: "excited",
+      timelineLabel: "2023",
     },
     {
       id: 3,
