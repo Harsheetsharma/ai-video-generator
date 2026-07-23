@@ -1,15 +1,15 @@
-import {
-  AbsoluteFill,
-  interpolate,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { AbsoluteFill, interpolate } from "remotion";
 import { Scene } from "@/types/blueprint";
 import { Background } from "../components/Background";
 import { AnimatedCard } from "../components/cards/AnimatedCard";
 import { Title } from "../components/text/Title";
 import { Subtitle } from "../components/text/Subtitle";
+import { useSceneAnimation } from "../hooks/useSceneAnimation";
+import {
+  fadeInUp,
+  pop,
+  growVertical,
+} from "../components/animations/AnimationStyles";
 
 interface TimelineLayoutProps {
   scene: Scene;
@@ -17,38 +17,13 @@ interface TimelineLayoutProps {
 }
 
 export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
-  const frame = localFrame;
-  const { fps } = useVideoConfig();
-
-  const yearProgress = spring({
-    frame: localFrame,
-    fps,
-    durationInFrames: 25,
-  });
-
-  const dotProgress = spring({
-    frame: localFrame - 8,
-    fps,
-    durationInFrames: 18,
-  });
-
-  const lineProgress = spring({
-    frame: localFrame - 16,
-    fps,
-    durationInFrames: 22,
-  });
-
-  const titleProgress = spring({
-    frame: localFrame - 28,
-    fps,
-    durationInFrames: 20,
-  });
-
-  const subtitleProgress = spring({
-    frame: localFrame - 38,
-    fps,
-    durationInFrames: 18,
-  });
+  const {
+    yearProgress,
+    dotProgress,
+    lineProgress,
+    titleProgress,
+    subtitleProgress,
+  } = useSceneAnimation(localFrame);
 
   return (
     <AbsoluteFill>
@@ -61,14 +36,7 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
             fontSize: 42,
             fontWeight: 700,
             marginBottom: 20,
-
-            opacity: yearProgress,
-
-            transform: `translateY(${interpolate(
-              yearProgress,
-              [0, 1],
-              [30, 0],
-            )}px)`,
+            ...fadeInUp(yearProgress, 30),
           }}
         >
           {JSON.stringify(scene.timelineLabel)}
@@ -89,43 +57,25 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
               borderRadius: "50%",
               background: "#5B8CFF",
               marginBottom: 8,
-              transform: `scale(${dotProgress})`,
+              ...pop(dotProgress),
             }}
           />
 
           <div
             style={{
               width: 6,
-              height: interpolate(lineProgress, [0, 1], [0, 180]),
+              ...growVertical(lineProgress),
               borderRadius: 999,
               background: "#5B8CFF",
             }}
           />
         </div>
 
-        <div
-          style={{
-            opacity: titleProgress,
-            transform: `translateY(${interpolate(
-              titleProgress,
-              [0, 1],
-              [20, 0],
-            )}px)`,
-          }}
-        >
+        <div style={fadeInUp(titleProgress)}>
           <Title>{scene.text}</Title>
         </div>
 
-        <div
-          style={{
-            opacity: subtitleProgress,
-            transform: `translateY(${interpolate(
-              subtitleProgress,
-              [0, 1],
-              [15, 0],
-            )}px)`,
-          }}
-        >
+        <div style={fadeInUp(subtitleProgress, 15)}>
           <Subtitle>{scene.caption}</Subtitle>
         </div>
       </AnimatedCard>
