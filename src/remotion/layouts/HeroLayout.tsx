@@ -5,23 +5,28 @@ import { Background } from "../components/Background";
 import { AnimatedCard } from "../components/cards/AnimatedCard";
 import { Title } from "../components/text/Title";
 import { Subtitle } from "../components/text/Subtitle";
+import { useSceneAnimation } from "../hooks/useSceneAnimation";
+import { fadeInUp } from "../components/animations/AnimationStyles";
+
 interface HeroLayoutProps {
   scene: Scene;
   localFrame: number;
 }
 
 export const HeroLayout = ({ scene, localFrame }: HeroLayoutProps) => {
+  const { titleProgress, subtitleProgress } = useSceneAnimation(localFrame);
+
   return (
     <AbsoluteFill>
       <Background scene={scene} />
       <AnimatedCard>
-        <AnimatedText animation={scene.animation} localFrame={localFrame}>
+        <div style={fadeInUp(titleProgress)}>
           <Title>{scene.text}</Title>
-        </AnimatedText>
+        </div>
 
-        <AnimatedText animation="fade" localFrame={localFrame}>
+        <div style={fadeInUp(subtitleProgress)}>
           <Subtitle>{scene.caption}</Subtitle>
-        </AnimatedText>
+        </div>
       </AnimatedCard>
     </AbsoluteFill>
   );
