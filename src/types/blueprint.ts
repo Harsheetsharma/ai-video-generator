@@ -1,3 +1,4 @@
+
 export type VisualType =
     | "tech"
     | "ai"
@@ -25,6 +26,27 @@ export type TransitionType =
     | "fade"
     | "zoom"
     | "slide";
+
+export interface HeroContent {
+    title: string;
+    subtitle: string;
+}
+
+export interface TimelineContent {
+    year: string;
+    title: string;
+    subtitle: string;
+}
+
+export interface StatisticsContent {
+    value: string;
+    label: string;
+}
+
+export interface QuoteContent {
+    quote: string;
+    author?: string;
+}
 
 // export type ScenePurpose =
 //     | "hook"
@@ -62,8 +84,17 @@ export interface Scene {
     voiceEmotion: string;
 
     timelineLabel?: string;
+
+    content?: HeroContent | TimelineContent | StatisticsContent | QuoteContent;
     // scenePurpose: ScenePurpose;
 }
+
+// interface BaseScene {
+//     id: string;
+//     duration: number;
+//     background: VisualType;
+//     animation: AnimationType;
+// }
 
 export interface VideoBlueprint {
     title: string;
