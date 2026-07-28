@@ -64,9 +64,6 @@ export interface Scene {
     start: number;
     end: number;
 
-    text: string;
-    caption: string;
-
     visualType: VisualType;
 
     background: VisualType;
@@ -82,8 +79,6 @@ export interface Scene {
     musicMood: string;
 
     voiceEmotion: string;
-
-    timelineLabel?: string;
 
     content?: HeroContent | TimelineContent | StatisticsContent | QuoteContent;
     // scenePurpose: ScenePurpose;

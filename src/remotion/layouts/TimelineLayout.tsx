@@ -5,7 +5,7 @@ import { AnimatedCard } from "../components/cards/AnimatedCard";
 import { Title } from "../components/text/Title";
 import { Subtitle } from "../components/text/Subtitle";
 import { useSceneAnimation } from "../hooks/useSceneAnimation";
-import { HeroContent } from "@/types/blueprint";
+import { TimelineContent } from "@/types/blueprint";
 import {
   fadeInUp,
   pop,
@@ -18,7 +18,7 @@ interface TimelineLayoutProps {
 }
 
 export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
-  const content = scene.content as HeroContent;
+  const content = scene.content as TimelineContent;
   const {
     yearProgress,
     dotProgress,
@@ -41,7 +41,7 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
             ...fadeInUp(yearProgress, 30),
           }}
         >
-          {JSON.stringify(scene.timelineLabel)}
+          {JSON.stringify(content.year)}
         </div>
 
         <div
