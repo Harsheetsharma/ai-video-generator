@@ -15,6 +15,16 @@ export interface AudioAsset {
     src: string;
     duration: number;
 }
+export interface MediaInfo {
+    search: string;
+    icon?: string;
+    overlay?: string;
+}
+
+export interface SceneStyle {
+    theme?: string;
+    accent?: string;
+}
 
 export type MediaAsset =
     | VideoAsset

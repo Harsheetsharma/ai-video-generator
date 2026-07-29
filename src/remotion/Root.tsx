@@ -11,9 +11,6 @@ const mockBlueprint: VideoBlueprint = {
       start: 0,
       end: 3,
 
-      text: "Apple introduces a new AI chip.",
-      caption: "Scene 1",
-
       content: {
         title: "Apple introduces a new AI chip.",
         subtitle: "Scene 1",
@@ -24,7 +21,9 @@ const mockBlueprint: VideoBlueprint = {
       background: "tech",
       layout: "hero",
       transition: "cut",
-      visualSearch: "Apple keynote stage",
+      media: {
+        search: "Apple keynote stage",
+      },
       musicMood: "epic",
       voiceEmotion: "excited",
     },
@@ -32,9 +31,6 @@ const mockBlueprint: VideoBlueprint = {
       id: 2,
       start: 3,
       end: 7,
-
-      text: "The chip is twice as fast as before.",
-      caption: "Scene 2",
 
       content: {
         year: "2023",
@@ -47,17 +43,17 @@ const mockBlueprint: VideoBlueprint = {
       background: "tech",
       layout: "timeline",
       transition: "cut",
-      visualSearch: "Apple keynote stage",
+      media: {
+        search: "Apple keynote stage",
+      },
       musicMood: "epic",
       voiceEmotion: "excited",
-      timelineLabel: "2023",
     },
     {
       id: 3,
       start: 7,
       end: 10,
-      text: "Now the ai will take over",
-      caption: "Scene 3",
+
       content: {
         title: "Now the ai will take over",
         subtitle: "Scene 3",
@@ -67,7 +63,9 @@ const mockBlueprint: VideoBlueprint = {
       background: "ai",
       layout: "hero",
       transition: "cut",
-      visualSearch: "Apple keynote stage",
+      media: {
+        search: "Apple keynote stage",
+      },
       musicMood: "epic",
       voiceEmotion: "excited",
     },

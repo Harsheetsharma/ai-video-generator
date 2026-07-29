@@ -1,3 +1,5 @@
+import { MediaInfo, SceneStyle } from "./media";
+
 
 export type VisualType =
     | "tech"
@@ -72,13 +74,13 @@ export interface BaseScene {
 
     transition: TransitionType;
 
-    visualSearch: string;
+    media: MediaInfo;
 
+    style?: SceneStyle;
     musicMood: string;
 
     voiceEmotion: string;
 
-    // scenePurpose: ScenePurpose;
 }
 
 // interface BaseScene {
