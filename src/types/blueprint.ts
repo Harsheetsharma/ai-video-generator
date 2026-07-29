@@ -58,7 +58,7 @@ export interface QuoteContent {
 //     | "steps"
 //     | "cta";
 
-export interface Scene {
+export interface BaseScene {
     id: number;
 
     start: number;
@@ -70,8 +70,6 @@ export interface Scene {
 
     animation: AnimationType;
 
-    layout: LayoutType;
-
     transition: TransitionType;
 
     visualSearch: string;
@@ -80,7 +78,6 @@ export interface Scene {
 
     voiceEmotion: string;
 
-    content?: HeroContent | TimelineContent | StatisticsContent | QuoteContent;
     // scenePurpose: ScenePurpose;
 }
 
@@ -90,6 +87,24 @@ export interface Scene {
 //     background: VisualType;
 //     animation: AnimationType;
 // }
+
+export type Scene =
+    | (BaseScene & {
+        layout: "hero";
+        content: HeroContent;
+    })
+    | (BaseScene & {
+        layout: "timeline";
+        content: TimelineContent;
+    })
+    | (BaseScene & {
+        layout: "statistics";
+        content: StatisticsContent;
+    })
+    | (BaseScene & {
+        layout: "quote";
+        content: QuoteContent;
+    });
 
 export interface VideoBlueprint {
     title: string;

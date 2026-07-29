@@ -7,7 +7,6 @@ import { Title } from "../components/text/Title";
 import { Subtitle } from "../components/text/Subtitle";
 import { useSceneAnimation } from "../hooks/useSceneAnimation";
 import { fadeInUp } from "../components/animations/AnimationStyles";
-import { HeroContent } from "@/types/blueprint";
 interface HeroLayoutProps {
   scene: Scene;
   localFrame: number;
@@ -15,17 +14,17 @@ interface HeroLayoutProps {
 
 export const HeroLayout = ({ scene, localFrame }: HeroLayoutProps) => {
   const { titleProgress, subtitleProgress } = useSceneAnimation(localFrame);
-  const content = scene.content as HeroContent;
+  if (scene.layout !== "hero") return null;
   return (
     <AbsoluteFill>
       <Background scene={scene} />
       <AnimatedCard>
         <div style={fadeInUp(titleProgress)}>
-          <Title>{content.title}</Title>
+          <Title>{scene.content.title}</Title>
         </div>
 
         <div style={fadeInUp(subtitleProgress)}>
-          <Subtitle>{content.subtitle}</Subtitle>
+          <Subtitle>{scene.content.subtitle}</Subtitle>
         </div>
       </AnimatedCard>
     </AbsoluteFill>

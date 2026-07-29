@@ -5,7 +5,6 @@ import { AnimatedCard } from "../components/cards/AnimatedCard";
 import { Title } from "../components/text/Title";
 import { Subtitle } from "../components/text/Subtitle";
 import { useSceneAnimation } from "../hooks/useSceneAnimation";
-import { TimelineContent } from "@/types/blueprint";
 import {
   fadeInUp,
   pop,
@@ -18,7 +17,7 @@ interface TimelineLayoutProps {
 }
 
 export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
-  const content = scene.content as TimelineContent;
+  if (scene.layout !== "timeline") return null;
   const {
     yearProgress,
     dotProgress,
@@ -41,7 +40,7 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
             ...fadeInUp(yearProgress, 30),
           }}
         >
-          {JSON.stringify(content.year)}
+          {JSON.stringify(scene.content.year)}
         </div>
 
         <div
@@ -74,11 +73,11 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
         </div>
 
         <div style={fadeInUp(titleProgress)}>
-          <Title>{content?.title}</Title>
+          <Title>{scene.content?.title}</Title>
         </div>
 
         <div style={fadeInUp(subtitleProgress, 15)}>
-          <Subtitle>{content?.subtitle}</Subtitle>
+          <Subtitle>{scene.content?.subtitle}</Subtitle>
         </div>
       </AnimatedCard>
     </AbsoluteFill>
