@@ -3,17 +3,18 @@ import { Scene } from "@/types/blueprint";
 import { HeroLayout } from "../layouts/HeroLayout";
 import { TimelineLayout } from "../layouts/TimelineLayout";
 
-interface Props {
+interface LayoutEngineProps {
   scene: Scene;
+  localFrame: number;
 }
 
-export function LayoutEngine({ scene }: Props) {
+export function LayoutEngine({ scene, localFrame }: LayoutEngineProps) {
   switch (scene.layout) {
     case "hero":
-      return <HeroLayout scene={scene} />;
+      return <HeroLayout scene={scene} localFrame={localFrame} />;
 
     case "timeline":
-      return <TimelineLayout scene={scene} />;
+      return <TimelineLayout scene={scene} localFrame={localFrame} />;
 
     default:
       return null;

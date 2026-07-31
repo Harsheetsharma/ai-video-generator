@@ -5,10 +5,11 @@ interface HeroLayoutProps {
 }
 
 export const QuoteLayout = ({ scene }: HeroLayoutProps) => {
+  if (scene.layout !== "quote") return null;
   return (
     <>
-      <h1>{scene.text}</h1>
-      <p>{scene.caption}</p>
+      <h1>{scene.content.author}</h1>
+      <p>{scene.content.quote}</p>
     </>
   );
 };

@@ -8,11 +8,12 @@ interface StatisticsLayoutProps {
 }
 
 export const StatisticsLayout = ({ scene }: StatisticsLayoutProps) => {
+  if (scene.layout !== "statistics") return null;
   return (
     <AbsoluteFill>
       <Background scene={scene} />
 
-      <StatCard value={97} suffix="%" label={scene.text} />
+      <StatCard value={97} suffix="%" label={scene.content.label} />
     </AbsoluteFill>
   );
 };
