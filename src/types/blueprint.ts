@@ -17,11 +17,10 @@ export type AnimationType =
 
 export type LayoutType =
     | "hero"
-    | "split"
-    | "news"
     | "quote"
     | "statistics"
-    | "timeline";
+    | "timeline"
+    | "comparison";
 
 export type TransitionType =
     | "cut"
@@ -48,6 +47,14 @@ export interface StatisticsContent {
 export interface QuoteContent {
     quote: string;
     author?: string;
+}
+
+export interface ComparisonContent {
+    leftTitle: string;
+    rightTitle: string;
+
+    leftPoints: string[];
+    rightPoints: string[];
 }
 
 // export type ScenePurpose =
@@ -106,6 +113,10 @@ export type Scene =
     | (BaseScene & {
         layout: "quote";
         content: QuoteContent;
+    })
+    | (BaseScene & {
+        layout: "comparison";
+        content: ComparisonContent;
     });
 
 export interface VideoBlueprint {
