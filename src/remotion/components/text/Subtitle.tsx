@@ -3,18 +3,28 @@ import { Theme } from "../../theme/Theme";
 
 interface Props {
   children: React.ReactNode;
+  fontSize?: number;
+  textAlign?: "left" | "center" | "right";
+  color?: string;
+  fontWeight?: number;
 }
 
-export const Subtitle = ({ children }: Props) => (
-  <p
+export const Subtitle = ({
+  children,
+  fontSize = Theme.typography.hero,
+  textAlign = "center",
+  color = Theme.colors.text,
+  fontWeight = 800,
+}: Props) => (
+  <h1
     style={{
-      fontSize: Theme.typography.subtitle,
-      color: Theme.colors.secondaryText,
-      textAlign: "center",
-      marginTop: Theme.spacing.md,
-      marginBottom: 0,
+      fontSize,
+      color,
+      fontWeight,
+      textAlign,
+      margin: 0,
     }}
   >
     {children}
-  </p>
+  </h1>
 );

@@ -21,7 +21,8 @@ export const ComparisonLayout = ({ scene }: ComparisonLayoutPropt) => {
             width: "100%",
             justifyContent: "space-between",
             alignItems: "flex-start",
-            gap: 60,
+            gap: 100,
+            padding: 20,
           }}
         >
           <div
@@ -29,12 +30,18 @@ export const ComparisonLayout = ({ scene }: ComparisonLayoutPropt) => {
               flex: 1,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "flex-start",
             }}
           >
-            <Title>{scene.content.leftTitle}</Title>
+            <div style={{ marginBottom: 30 }}>
+              <Title fontSize={42} textAlign="left">
+                {scene.content.leftTitle}
+              </Title>
+            </div>
             {scene.content.leftPoints.map((point) => (
-              <BodyText key={point}>• {point}</BodyText>
+              <div key={point} style={{ marginBottom: 12 }}>
+                <BodyText>✓ {point}</BodyText>
+              </div>
             ))}
           </div>
 
@@ -42,7 +49,7 @@ export const ComparisonLayout = ({ scene }: ComparisonLayoutPropt) => {
             style={{
               width: 2,
               background: "rgba(255,255,255,.2)",
-              alignSelf: "stretch",
+              height: 260,
             }}
           />
 
@@ -51,12 +58,18 @@ export const ComparisonLayout = ({ scene }: ComparisonLayoutPropt) => {
               flex: 1,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "flex-start",
             }}
           >
-            <Title>{scene.content.rightTitle}</Title>
-            {scene.content.rightPoints.map((point) => (
-              <BodyText key={point}>• {point}</BodyText>
+            <div style={{ marginBottom: 30 }}>
+              <Title fontSize={42} textAlign="left">
+                {scene.content.rightTitle}
+              </Title>
+            </div>
+            {scene.content.leftPoints.map((point) => (
+              <div key={point} style={{ marginBottom: 12 }}>
+                <BodyText>✓ {point}</BodyText>
+              </div>
             ))}
           </div>
         </div>
