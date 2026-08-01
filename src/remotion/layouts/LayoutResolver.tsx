@@ -3,6 +3,8 @@ import { StatisticsLayout } from "./StatisticsLayout";
 import { HeroLayout } from "./HeroLayout";
 import { QuoteLayout } from "./QuoteLayout";
 import { TimelineLayout } from "./TimelineLayout";
+import { ComparisonLayout } from "./ComparisonLayout";
+
 interface LayoutResolverProps {
   scene: Scene;
   localFrame: number;
@@ -15,6 +17,9 @@ export const LayoutResolver = ({ scene, localFrame }: LayoutResolverProps) => {
 
     case "statistics":
       return <StatisticsLayout scene={scene} />;
+
+    case "comparison":
+      return <ComparisonLayout scene={scene} />;
 
     case "timeline":
       return <TimelineLayout scene={scene} localFrame={localFrame} />;

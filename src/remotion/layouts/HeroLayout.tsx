@@ -7,6 +7,7 @@ import { Title } from "../components/text/Title";
 import { Subtitle } from "../components/text/Subtitle";
 import { useSceneAnimation } from "../hooks/useSceneAnimation";
 import { fadeInUp } from "../components/animations/AnimationStyles";
+
 interface HeroLayoutProps {
   scene: Scene;
   localFrame: number;

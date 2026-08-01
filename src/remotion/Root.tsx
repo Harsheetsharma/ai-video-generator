@@ -55,17 +55,24 @@ const mockBlueprint: VideoBlueprint = {
       end: 10,
 
       content: {
-        title: "Now the ai will take over",
-        subtitle: "Scene 3",
+        leftTitle: "Traditional",
+        rightTitle: "AI Engine",
+
+        leftPoints: ["Manual", "Slow", "Expensive"],
+
+        rightPoints: ["Automatic", "Fast", "Affordable"],
       },
+
       visualType: "ai",
       animation: "fade",
       background: "ai",
-      layout: "hero",
+      layout: "comparison",
       transition: "cut",
+
       media: {
-        search: "Apple keynote stage",
+        search: "Artificial intelligence",
       },
+
       musicMood: "epic",
       voiceEmotion: "excited",
     },
