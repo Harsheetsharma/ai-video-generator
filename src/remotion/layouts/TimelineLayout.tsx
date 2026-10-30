@@ -1,4 +1,4 @@
-import { AbsoluteFill, interpolate } from "remotion";
+import { AbsoluteFill } from "remotion";
 import { Scene } from "@/types/blueprint";
 import { Background } from "../components/Background";
 import { AnimatedCard } from "../components/cards/AnimatedCard";
@@ -17,7 +17,6 @@ interface TimelineLayoutProps {
 }
 
 export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
-  if (scene.layout !== "timeline") return null;
   const {
     yearProgress,
     dotProgress,
@@ -25,6 +24,8 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
     titleProgress,
     subtitleProgress,
   } = useSceneAnimation(localFrame);
+
+  if (scene.layout !== "timeline") return null;
 
   return (
     <AbsoluteFill>
@@ -40,7 +41,7 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
             ...fadeInUp(yearProgress, 30),
           }}
         >
-          {JSON.stringify(scene.content.year)}
+          {scene.content.year}
         </div>
 
         <div
@@ -73,11 +74,11 @@ export const TimelineLayout = ({ scene, localFrame }: TimelineLayoutProps) => {
         </div>
 
         <div style={fadeInUp(titleProgress)}>
-          <Title>{scene.content?.title}</Title>
+          <Title>{scene.content.title}</Title>
         </div>
 
         <div style={fadeInUp(subtitleProgress, 15)}>
-          <Subtitle>{scene.content?.subtitle}</Subtitle>
+          <Subtitle>{scene.content.subtitle}</Subtitle>
         </div>
       </AnimatedCard>
     </AbsoluteFill>
