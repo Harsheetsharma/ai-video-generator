@@ -9,25 +9,48 @@ interface ScriptFormProps {
 export default function ScriptForm({ onResponse }: ScriptFormProps) {
   const [script, setScript] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [targetType, setTargetType] = useState<"short" | "long">("short");
+
   async function handleGenerate() {
-    if (!script.trim()) return;
+    if (!script.trim() || loading) return;
 
     setLoading(true);
+    setError("");
 
     try {
-      const response = await fetch("api/generate", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          script,
+          script: script.trim(),
           targetType,
         }),
       });
-      const data = await response.json();
+
+      const data: unknown = await response.json();
+
+      if (!response.ok) {
+        const message =
+          typeof data === "object" &&
+          data !== null &&
+          "error" in data &&
+          typeof data.error === "string"
+            ? data.error
+            : "Unable to generate the video. Please try again.";
+
+        throw new Error(message);
+      }
+
       onResponse(data);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -39,13 +62,15 @@ export default function ScriptForm({ onResponse }: ScriptFormProps) {
         value={script}
         onChange={(e) => setScript(e.target.value)}
         placeholder="Paste your script..."
-        className="w-full h-48 rounded border p-4"
+        aria-label="Video script"
+        className="h-48 w-full rounded border p-4"
       />
 
       <div className="flex gap-6">
         <label className="flex items-center gap-2">
           <input
             type="radio"
+            name="targetType"
             value="short"
             checked={targetType === "short"}
             onChange={() => setTargetType("short")}
@@ -56,6 +81,7 @@ export default function ScriptForm({ onResponse }: ScriptFormProps) {
         <label className="flex items-center gap-2">
           <input
             type="radio"
+            name="targetType"
             value="long"
             checked={targetType === "long"}
             onChange={() => setTargetType("long")}
@@ -64,10 +90,16 @@ export default function ScriptForm({ onResponse }: ScriptFormProps) {
         </label>
       </div>
 
+      {error && (
+        <p role="alert" className="text-sm text-red-600">
+          {error}
+        </p>
+      )}
+
       <button
         onClick={handleGenerate}
-        disabled={loading}
-        className="rounded bg-black px-5 py-2 text-white"
+        disabled={loading || !script.trim()}
+        className="rounded bg-black px-5 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? "Generating..." : "Generate"}
       </button>
