@@ -2,11 +2,36 @@ import { NextResponse } from "next/server";
 import { generateBlueprint } from "@/ai/generateBlueprint";
 
 export async function POST(request: Request) {
-    const body = await request.json();
+    try {
+        const body: unknown = await request.json();
 
-    const blueprint = await generateBlueprint(body);
+        if (
+            typeof body !== "object" ||
+            body === null ||
+            !("script" in body) ||
+            typeof body.script !== "string" ||
+            !body.script.trim() ||
+            !("targetType" in body) ||
+            (body.targetType !== "short" && body.targetType !== "long")
+        ) {
+            return NextResponse.json(
+                { error: "A non-empty script and a valid targetType (short or long) are required." },
+                { status: 400 }
+            );
+        }
 
-    return NextResponse.json({
-        blueprint
-    });
+        const blueprint = await generateBlueprint({
+            script: body.script.trim(),
+            targetType: body.targetType,
+        });
+
+        return NextResponse.json({ blueprint });
+    } catch (error) {
+        console.error("Video generation failed:", error);
+
+        return NextResponse.json(
+            { error: "Video generation failed. Check that Ollama is running and configured correctly, then try again." },
+            { status: 500 }
+        );
+    }
 }
