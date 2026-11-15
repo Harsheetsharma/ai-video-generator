@@ -83,6 +83,9 @@ export interface BaseScene {
 
     media: MediaInfo;
 
+    /** Optional search phrase used by asset providers to describe a scene visual. */
+    visualSearch?: string;
+
     style?: SceneStyle;
     musicMood: string;
 
